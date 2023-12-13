@@ -1,3 +1,39 @@
+# ExpenseLens Project Flow
+
+1. **User Uploads Receipts:**
+   - Users upload receipt images via the mobile application.
+
+2. **Image Storage:**
+   - The images are transmitted to the specified S3 bucket (`arn:aws:s3:::receiptimagesbucket`).
+
+3. **AWS TExtract Extraction:**
+   - An API call is made to AWS TExtract for extracting details from the receipts.
+
+4. **Information Extraction:**
+   - AWS TExtract identifies and extracts information, including itemized costs, payment type, total receipt amount, and tax.
+
+5. **NLP Classification:**
+   - Another API invokes an NLP model hosted on a Lambda function to classify the extracted items.
+
+6. **Update Products Table:**
+   - The products table is updated with details such as product ID, receipt ID, product name, product cost, and product category.
+
+7. **User Information Storage:**
+   - User information is stored in the user table, including user ID, name, gender, city, state, email, and password.
+
+8. **Receipt Details Recording:**
+   - Receipt details, such as receipt ID, user ID, date, total amount, tax, and payment type, are recorded in the receipts table.
+
+9. **Purchase Data Consolidation:**
+   - All customer purchases are consolidated into the `purchase_data` table in the backend, capturing invoice ID, city, gender, product category, quantity, tax, total, date, month, and payment information for business analytics.
+
+10. **Monthly Expenditure Summary:**
+    - Users receive a monthly expenditure summary presented in the form of a pie chart.
+
+11. **Business Analytics with QuickSight:**
+    - From a business perspective, the RDS database is linked to QuickSight for comprehensive insights and analytics.
+
+
 # Project Overview
 
 ## Module 1: Product Classification Model
@@ -55,6 +91,6 @@ This module contains a Lambda function that serves as a predictor with a pre-tra
 ### Description
 In addition to the main modules, the project includes Glue automation scripts for extracting data from the database to generate insights.
 
----
 
-Feel free to update this README file with any additional information or specific instructions for setting up and running each module.
+
+
